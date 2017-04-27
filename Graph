@@ -1,1 +1,415 @@
+Main
+
+package com.example.a40871.aftermathgraph;
+
+import android.app.FragmentManager;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+/*Due to graphing not being a default feature on android studio,
+we had imported a library to allow us to insert a Graph View */
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
+
+//This is where we defined our various widgets
+    private Button sin;
+    private Button cos;
+    private Button tan;
+    private Button submit;
+    private TextView function;
+    private EditText x3input;
+    private EditText x2input;
+    private EditText xinput;
+    private EditText b;
+    private TextView plus1;
+    private TextView plus2;
+    private TextView plus3;
+    private TextView x3textview;
+    private TextView x2textview;
+    private TextView xtextview;
+    private TextView btextview;
+    double y,x;
+    LineGraphSeries<DataPoint> series;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+
+//List of our Findviewbyids
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Button sin = (Button) findViewById(R.id.sin);
+        Button cos = (Button) findViewById(R.id.cos);
+        Button tan = (Button) findViewById(R.id.tan);
+        Button submit = (Button) findViewById(R.id.submit);
+        TextView function = (TextView) findViewById(R.id.function);
+        final EditText x3input = (EditText) findViewById(R.id.x3input);
+        final EditText x2input = (EditText) findViewById(R.id.x2input);
+        final EditText xinput = (EditText) findViewById(R.id.xinput);
+        final EditText b = (EditText) findViewById(R.id.b);
+        TextView plus1 = (TextView) findViewById(R.id.plus1);
+        TextView plus2 = (TextView) findViewById(R.id.plus2);
+        TextView plus3 = (TextView) findViewById(R.id.plus3);
+        TextView x3textview = (TextView) findViewById(R.id.x3textview);
+        TextView x2textview = (TextView) findViewById(R.id.x2textview);
+        TextView xtextview = (TextView) findViewById(R.id.xtextview);
+        TextView btextview = (TextView) findViewById(R.id.btextview);
+        GraphView graph = (GraphView) findViewById(R.id.graph);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+
+//Sin graph button that graphs the sin curve for a designated interval
+        sin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GraphView graph = (GraphView) findViewById(R.id.graph);
+   //This code resets the graph
+   graph.removeAllSeries();
+                x = -6.283185;
+                series = new LineGraphSeries<DataPoint>();
+                for (int i = 0; i < 200; i++) {
+                    x = x + 0.1;
+                    y = Math.sin(x);
+                    series.appendData(new DataPoint(x, y), true, 2000);
+                }
+                graph.addSeries(series);
+            }
+        });
+        //Code for Cos Button
+        cos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GraphView graph = (GraphView) findViewById(R.id.graph);
+                graph.removeAllSeries();
+                x = -6.283185;
+
+                series = new LineGraphSeries<DataPoint>();
+                for (int i = 0; i < 200; i++) {
+                    x = x + 0.1;
+                    y = Math.cos(x);
+                    series.appendData(new DataPoint(x, y), true, 2000);
+                }
+
+                graph.addSeries(series);
+            }
+        });
+        tan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GraphView graph = (GraphView) findViewById(R.id.graph);
+                graph.removeAllSeries();
+                x = -3.14;
+
+                series = new LineGraphSeries<DataPoint>();
+                for (int i = 0; i < 50; i++) {
+                    x = x + 0.15;
+                    y = Math.tan(x);
+                    series.appendData(new DataPoint(x, y), true, 50);
+                }
+                graph.addSeries(series);
+            }
+        });
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+           /*    Integer.parseInt(x3input.getText().toString());
+                Integer.parseInt(x2input.getText().toString());
+                Integer.parseInt(xinput.getText().toString());
+                Integer.parseInt(b.getText().toString());*/
+              int three = Integer.valueOf(x3input.getText().toString());
+                int two = Integer.valueOf(x2input.getText().toString());
+                int one = Integer.valueOf(xinput.getText().toString());
+                int bee = Integer.valueOf(b.getText().toString());
+                GraphView graph = (GraphView) findViewById(R.id.graph);
+                graph.removeAllSeries();
+                x = -10;
+
+                series = new LineGraphSeries<DataPoint>();
+                for (int i = 0; i < 200; i++) {
+                    x = x + 0.1;
+                  y = three * x *x *x + two *x *x + one * x + bee ;//
+
+                 //   y = (x3input * x *x *x) + (x2input *x *x) + (xinput* x) + binput ;
+                    series.appendData(new DataPoint(x, y), true, 200);
+                }
+                graph.addSeries(series);
+            }
+        });
+    }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+FragmentManager fragmentManager = getFragmentManager();
+        if (id == R.id.nav_camera) {
+         
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+}
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.a40871.aftermathgraph.MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph"
+        android:layout_width="356dp"
+        android:layout_height="315dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/sin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sin(x)"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/graph" />
+
+    <Button
+        android:id="@+id/cos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cos(x)"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/graph"
+        app:layout_constraintLeft_toRightOf="@+id/sin"
+        android:layout_marginLeft="8dp" />
+
+    <Button
+        android:id="@+id/tan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tan(x)"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/graph"
+        app:layout_constraintLeft_toRightOf="@+id/cos"
+        android:layout_marginLeft="8dp" />
+
+    <TextView
+        android:id="@+id/function"
+        android:layout_width="88dp"
+        android:layout_height="50dp"
+        android:text="Function: y="
+        android:textSize="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="-9dp"
+        android:layout_marginLeft="-3dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="96dp"
+        android:layout_height="46dp"
+        android:text="Submit"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/tan"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/graph" />
+
+    <EditText
+        android:id="@+id/x3input"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintLeft_toRightOf="@+id/function"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:id="@+id/x2input"
+        android:layout_width="27dp"
+        android:layout_height="38dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintLeft_toRightOf="@+id/plus1"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:id="@+id/xinput"
+        android:layout_width="32dp"
+        android:layout_height="38dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintLeft_toRightOf="@+id/x2textview"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:id="@+id/b"
+        android:layout_width="30dp"
+        android:layout_height="38dp"
+        android:ems="10"
+        android:inputType="number"
+        tools:layout_editor_absoluteY="0dp"
+        app:layout_constraintLeft_toRightOf="@+id/xtextview"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/plus1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        app:layout_constraintLeft_toRightOf="@+id/x3textview"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/plus2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        app:layout_constraintLeft_toRightOf="@+id/x2textview"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/plus3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        app:layout_constraintLeft_toRightOf="@+id/xinput"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/x3textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x^3"
+        app:layout_constraintLeft_toRightOf="@+id/x3input"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/x2textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x^2"
+        app:layout_constraintLeft_toRightOf="@+id/x2input"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/xtextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x"
+        tools:layout_editor_absoluteY="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/xinput"
+        android:layout_marginLeft="0dp" />
+
+    <TextView
+        android:id="@+id/btextview"
+        android:layout_width="26dp"
+        android:layout_height="31dp"
+        android:text="b"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/b"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
 
