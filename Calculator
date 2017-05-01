@@ -194,40 +194,20 @@ XML:
 </GridLayout>
 
 JAVA:
-package com.example.a21715.calculator;
+package com.sample.foo.samplecalculator;
 
+import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+
+import com.sample.foo.samplecalculator.databinding.ActivityMainBinding;
 
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
-    private Button buttonZero;
-    private Button buttonOne;
-    private Button buttonTwo;
-    private Button buttonThree;
-    private Button buttonFour;
-    private Button buttonFive;
-    private Button buttonSix;
-    private Button buttonSeven;
-    private Button buttonEight;
-    private Button buttonNine;
-    private Button add;
-    private Button subtract;
-    private Button multiply;
-    private Button divide;
-    private Button negative;
-    private Button decimal;
-    private Button clear;
-    private Button calculate;
 
-    private EditText input;
-
-    private TextView infoTextView;
+    private ActivityMainBinding binding;
 
     private static final char ADDITION = '+';
     private static final char SUBTRACTION = '-';
@@ -244,172 +224,151 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Button buttonZero = (Button) findViewById(R.id.buttonZero);
-        Button buttonOne = (Button) findViewById(R.id.buttonOne);
-        Button buttonTwo = (Button) findViewById(R.id.buttonTwo);
-        Button buttonThree = (Button) findViewById(R.id.buttonThree);
-        Button buttonFour = (Button) findViewById(R.id.buttonFour);
-        Button buttonFive = (Button) findViewById(R.id.buttonFive);
-        Button buttonSix = (Button) findViewById(R.id.buttonSix);
-        Button buttonSeven = (Button) findViewById(R.id.buttonSeven);
-        Button buttonEight = (Button) findViewById(R.id.buttonEight);
-        Button buttonNine = (Button) findViewById(R.id.buttonNine);
-        Button add = (Button) findViewById(R.id.add);
-        Button subtract = (Button) findViewById(R.id.subtract);
-        Button multiply = (Button) findViewById(R.id.multiply);
-        Button divide = (Button) findViewById(R.id.divide);
-        Button decimal = (Button) findViewById(R.id.decimal);
-        Button clear = (Button) findViewById(R.id.clear);
-        Button negative = (Button) findViewById(R.id.negative);
-        Button calculate = (Button) findViewById(R.id.calculate);
-
-        super.onCreate(savedInstanceState);
 
         decimalFormat = new DecimalFormat("#.##########");
 
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        decimal.setOnClickListener(new View.OnClickListener() {
+        binding.buttonDot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                input.setText(input.getText() + ".");
+                binding.editText.setText(binding.editText.getText() + ".");
             }
         });
 
-        buttonZero.setOnClickListener(new View.OnClickListener() {
+        binding.buttonZero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                input.setText(input.getText() + "0");
+                binding.editText.setText(binding.editText.getText() + "0");
             }
         });
 
-        buttonOne.setOnClickListener(new View.OnClickListener() {
+        binding.buttonOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                input.setText(input.getText() + "1");
+                binding.editText.setText(binding.editText.getText() + "1");
             }
         });
 
-        buttonTwo.setOnClickListener(new View.OnClickListener() {
+        binding.buttonTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                input.setText(input.getText() + "2");
+                binding.editText.setText(binding.editText.getText() + "2");
             }
         });
 
-        buttonThree.setOnClickListener(new View.OnClickListener() {
+        binding.buttonThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                input.setText(input.getText() + "3");
+                binding.editText.setText(binding.editText.getText() + "3");
             }
         });
 
-        buttonFour.setOnClickListener(new View.OnClickListener() {
+        binding.buttonFour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                input.setText(input.getText() + "4");
+                binding.editText.setText(binding.editText.getText() + "4");
             }
         });
 
-        buttonFive.setOnClickListener(new View.OnClickListener() {
+        binding.buttonFive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                input.setText(input.getText() + "5");
+                binding.editText.setText(binding.editText.getText() + "5");
             }
         });
 
-        buttonSix.setOnClickListener(new View.OnClickListener() {
+        binding.buttonSix.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                input.setText(input.getText() + "6");
+                binding.editText.setText(binding.editText.getText() + "6");
             }
         });
 
-        buttonSeven.setOnClickListener(new View.OnClickListener() {
+        binding.buttonSeven.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                input.setText(input.getText() + "7");
+                binding.editText.setText(binding.editText.getText() + "7");
             }
         });
 
-        buttonEight.setOnClickListener(new View.OnClickListener() {
+        binding.buttonEight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                input.setText(input.getText() + "8");
+                binding.editText.setText(binding.editText.getText() + "8");
             }
         });
 
-        buttonNine.setOnClickListener(new View.OnClickListener() {
+        binding.buttonNine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                input.setText(input.getText() + "9");
+                binding.editText.setText(binding.editText.getText() + "9");
             }
         });
 
-        add.setOnClickListener(new View.OnClickListener() {
+        binding.buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 computeCalculation();
                 CURRENT_ACTION = ADDITION;
-                infoTextView.setText(decimalFormat.format(valueOne) + "+");
-                input.setText(null);
+                binding.infoTextView.setText(decimalFormat.format(valueOne) + "+");
+                binding.editText.setText(null);
             }
         });
 
-        subtract.setOnClickListener(new View.OnClickListener() {
+        binding.buttonSubtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 computeCalculation();
                 CURRENT_ACTION = SUBTRACTION;
-                infoTextView.setText(decimalFormat.format(valueOne) + "-");
-                input.setText(null);
+                binding.infoTextView.setText(decimalFormat.format(valueOne) + "-");
+                binding.editText.setText(null);
             }
         });
 
-        multiply.setOnClickListener(new View.OnClickListener() {
+        binding.buttonMultiply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 computeCalculation();
                 CURRENT_ACTION = MULTIPLICATION;
-                infoTextView.setText(decimalFormat.format(valueOne) + "*");
-                input.setText(null);
+                binding.infoTextView.setText(decimalFormat.format(valueOne) + "*");
+                binding.editText.setText(null);
             }
         });
 
-        divide.setOnClickListener(new View.OnClickListener() {
+        binding.buttonDivide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 computeCalculation();
                 CURRENT_ACTION = DIVISION;
-                infoTextView.setText(decimalFormat.format(valueOne) + "/");
-                input.setText(null);
+                binding.infoTextView.setText(decimalFormat.format(valueOne) + "/");
+                binding.editText.setText(null);
             }
         });
 
-        calculate.setOnClickListener(new View.OnClickListener() {
+        binding.buttonEqual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 computeCalculation();
-                infoTextView.setText(infoTextView.getText().toString() +
+                binding.infoTextView.setText(binding.infoTextView.getText().toString() +
                         decimalFormat.format(valueTwo) + " = " + decimalFormat.format(valueOne));
                 valueOne = Double.NaN;
                 CURRENT_ACTION = '0';
             }
         });
 
-        clear.setOnClickListener(new View.OnClickListener() {
+        binding.buttonClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(input.getText().length() > 0) {
-                    CharSequence currentText = input.getText();
-                    input.setText(currentText.subSequence(0, currentText.length()-1));
+                if(binding.editText.getText().length() > 0) {
+                    CharSequence currentText = binding.editText.getText();
+                    binding.editText.setText(currentText.subSequence(0, currentText.length()-1));
                 }
                 else {
                     valueOne = Double.NaN;
                     valueTwo = Double.NaN;
-                    input.setText("");
-                    infoTextView.setText("");
+                    binding.editText.setText("");
+                    binding.infoTextView.setText("");
                 }
             }
         });
@@ -417,8 +376,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void computeCalculation() {
         if(!Double.isNaN(valueOne)) {
-            valueTwo = Double.parseDouble(input.getText().toString());
-            input.setText(null);
+            valueTwo = Double.parseDouble(binding.editText.getText().toString());
+            binding.editText.setText(null);
 
             if(CURRENT_ACTION == ADDITION)
                 valueOne = this.valueOne + valueTwo;
@@ -431,10 +390,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             try {
-                valueOne = Double.parseDouble(input.getText().toString());
+                valueOne = Double.parseDouble(binding.editText.getText().toString());
             }
             catch (Exception e){}
         }
     }
 }
-
